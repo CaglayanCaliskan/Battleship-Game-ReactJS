@@ -1,6 +1,13 @@
 @tailwind components;
 @tailwind utilities;
 @tailwind base;
+
+@layer components {
+  .btn {
+    @apply bg-main text-white rounded-md p-2 hover:scale-95 border border-main hover:border-white transition-all;
+  }
+}
+
 @font-face {
   font-family: 'Playfair Display SC', serif;
   src: url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&display=swap');
