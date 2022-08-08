@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
 
+//5 diffrent size ships with id
+// dragable ships move to board
+
 const SinglePlayer = () => {
   const [attack, setAttack] = useState([]);
   const emptyBoard = [];
@@ -23,24 +26,61 @@ const SinglePlayer = () => {
     }
   };
 
+  //Ship Factory
+
   return (
     <div className='bg-brand h-screen w-full grid grid-rows-2 text-white'>
       <div className='relative border flex justify-center items-center'>
-        <div className=' absolute right-10 h-full w-48 '>
-          <h1>board:</h1>
-          <div className='border h-full relative'>
-            <div
-              onDragStart={(e) => {
-                e.dataTransfer.setData('test', e.target.dataset);
+        <div className=' absolute right-10 h-5/6 '>
+          <h1>Your Fleet:</h1>
 
-                console.log(e.dataTransfer);
-              }}
+          <div className='fleet border flex flex-col'>
+            <div
               draggable
-              className='gemi absolute flex gap-1 m-2'
+              id='destroyer'
+              className='flex gap-1 m-2 w-fit relative'
             >
-              <div className='border border-red-500 w-9 h-9'></div>
-              <div className='border border-red-500 w-9 h-9'></div>
-              <div className='border border-red-500 w-9 h-9'></div>
+              <div className='border border-yellow-500 w-9 h-9'></div>
+              <div className='border border-yellow-500 w-9 h-9'></div>
+            </div>
+            <div
+              id='submarine'
+              draggable
+              className='flex gap-1 m-2 w-fit relative'
+            >
+              <div className='border border-yellow-500 w-9 h-9'></div>
+              <div className='border border-yellow-500 w-9 h-9'></div>
+              <div className='border border-yellow-500 w-9 h-9'></div>
+            </div>
+            <div
+              id='cruiser'
+              draggable
+              className='flex gap-1 m-2 w-fit relative'
+            >
+              <div className='border border-yellow-500 w-9 h-9'></div>
+              <div className='border border-yellow-500 w-9 h-9'></div>
+              <div className='border border-yellow-500 w-9 h-9'></div>
+            </div>
+            <div
+              id='battleship'
+              draggable
+              className='flex gap-1 m-2 w-fit relative'
+            >
+              <div className='border border-yellow-500 w-9 h-9'></div>
+              <div className='border border-yellow-500 w-9 h-9'></div>
+              <div className='border border-yellow-500 w-9 h-9'></div>
+              <div className='border border-yellow-500 w-9 h-9'></div>
+            </div>
+            <div
+              id='carrier'
+              draggable
+              className='flex gap-1 m-2 w-fit relative'
+            >
+              <div className='border border-yellow-500 w-9 h-9'></div>
+              <div className='border border-yellow-500 w-9 h-9'></div>
+              <div className='border border-yellow-500 w-9 h-9'></div>
+              <div className='border border-yellow-500 w-9 h-9'></div>
+              <div className='border border-yellow-500 w-9 h-9'></div>
             </div>
           </div>
         </div>
@@ -54,6 +94,7 @@ const SinglePlayer = () => {
                 className={`border bg-cover select-none cursor-pointer w-10 h-10 `}
                 data-coordinat={box}
                 key={box}
+                id={box}
               ></div>
             );
           })}
