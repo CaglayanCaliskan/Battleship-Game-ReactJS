@@ -16,10 +16,16 @@ const Home = () => {
             Single Player
           </Link>
           <Link
-            to='multiplayer '
+            to='multiplayer'
             className='bg-main text-white rounded-md p-2 hover:scale-95 border border-main hover:border-white transition-all'
           >
             Multiplayer
+          </Link>
+          <Link
+            to='deneme'
+            className='bg-main text-white rounded-md p-2 hover:scale-95 border border-main hover:border-white transition-all'
+          >
+            Deneme
           </Link>
         </div>
       </div>
