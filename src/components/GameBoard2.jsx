@@ -1,6 +1,10 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 
 const GameBoard2 = ({name}) => {
+  const {playerFleet} = useSelector((state) => state.fleetsSlice);
+  const {rotate} = useSelector((state) => state.gameOptionsSlice);
+  const selected = playerFleet.filter((ship) => ship.selected);
   const rows = [
     {name: 'A', row: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]},
     {name: 'B', row: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]},
@@ -14,6 +18,21 @@ const GameBoard2 = ({name}) => {
     {name: 'J', row: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]},
   ];
   const column = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+  const dragEnter = (e) => {
+    const currentTarget = e.currentTarget;
+    const parentElement = e.currentTarget.parentElement;
+
+    //conditions for board
+    if (!rotate) {
+      //gemi dik geliyorsa
+      //check ship height
+      const shipSize = selected[0].size;
+      console.dir(parentElement);
+    } else {
+      //gemi yatay geliyorsa
+    }
+  };
   return (
     <div className='relative flex  flex-col gap-1 text-white mt-2'>
       <div
@@ -32,14 +51,23 @@ const GameBoard2 = ({name}) => {
         ))}
       </div>
       {/* row's name and boxes */}
-      {rows.map((row, index) => (
-        <div id={row.name} key={index} className='flex gap-1'>
-          <span className='w-4'>{row.name}</span>
-          {row.row.map((row, index) => (
-            <div key={index} id={row} className='box w-8 h-8 border'></div>
-          ))}
-        </div>
-      ))}
+      <div id='Board'>
+        {rows.map((row, index) => (
+          <div id={row.name} key={index} className='flex gap-1'>
+            <span className='w-4'>{row.name}</span>
+            {row.row.map((row, index) => (
+              <div
+                key={index}
+                id={row}
+                onDragEnter={dragEnter}
+                className={`box w-8 h-8 border ${
+                  name === 'Player' ? 'bg-green-200 hover:bg-blue-300' : ''
+                }`}
+              ></div>
+            ))}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
