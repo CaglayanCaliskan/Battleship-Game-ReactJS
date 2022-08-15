@@ -2,6 +2,7 @@ import {createSlice} from '@reduxjs/toolkit';
 
 const initialState = {
   rotate: false,
+  game: false,
 };
 
 export const gameOptions = createSlice({
@@ -11,8 +12,11 @@ export const gameOptions = createSlice({
     setRotate: (state) => {
       state.rotate = !state.rotate;
     },
+    setGameStart: (state) => {
+      state.game = !state.game;
+    },
   },
 });
 
-export const {setRotate} = gameOptions.actions;
+export const {setRotate, setGameStart} = gameOptions.actions;
 export default gameOptions.reducer;
