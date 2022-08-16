@@ -75,7 +75,7 @@ export const fleetsSlice = createSlice({
               box.parentElement.id.toLowerCase() === target.name
             ) {
               box.classList.add('bg-black');
-              box.setAttribute('data', action.payload.name + (index + 1));
+              box.setAttribute('data', action.payload.name);
             }
           }
         });

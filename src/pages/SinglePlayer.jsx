@@ -1,15 +1,20 @@
 import React from 'react';
+import ComputerBoard from '../components/ComputerBoard';
 import FleetSetup from '../components/FleetSetup';
-import GameBoard from '../components/GameBoard';
+import GameBoard from '../components/PlayerBoard';
+import {useSelector} from 'react-redux';
+import ScoreBoard from '../components/ScoreBoard';
 
 const SinglePlayer = () => {
+  const {game} = useSelector((state) => state.gameOptionsSlice);
+
   return (
     <main className='bg-brand h-screen select-none flex flex-col'>
       <div className='flex justify-around'>
-        <GameBoard name='Player' />
-        <GameBoard name='Computer' />
+        <GameBoard />
+        <ComputerBoard />
       </div>
-      <FleetSetup />
+      {!game ? <FleetSetup /> : <ScoreBoard />}
     </main>
   );
 };
