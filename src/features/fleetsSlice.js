@@ -74,7 +74,7 @@ export const fleetsSlice = createSlice({
               Number(box.id) === Number(target.number) &&
               box.parentElement.id.toLowerCase() === target.name
             ) {
-              box.classList.add('bg-black');
+              box.classList.add('bg-green-600');
               box.setAttribute('data', action.payload.name);
             }
           }
@@ -88,7 +88,7 @@ export const fleetsSlice = createSlice({
       state.playerFleet.map((ship) => (ship.onBoard = false));
       const boxes = document.querySelectorAll('.box');
       boxes.forEach((box) => {
-        box.classList.remove('bg-black');
+        box.classList.remove('bg-green-600');
         box.setAttribute('data', undefined);
       });
     },

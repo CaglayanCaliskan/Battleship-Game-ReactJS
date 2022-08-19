@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {dropAvailable} from '../features/fleetsSlice';
 
-const PlayerBoard = ({name}) => {
+const PlayerBoard = ({PlayerRef}) => {
   const [drop, setDrop] = useState(false);
 
   const {playerFleet} = useSelector((state) => state.fleetsSlice);
@@ -45,7 +45,8 @@ const PlayerBoard = ({name}) => {
         for (let i = 0; i < shipSize; i++) {
           const targetBox =
             boardArray[index + i].children[Number(e.currentTarget.id)];
-          targetBox.classList.add('bg-green-600');
+          targetBox.classList.add('bg-green-500');
+
           const name = targetBox.parentElement.id.toLowerCase();
           const number = targetBox.id;
           availableGreenBox.push({name, number});
@@ -55,8 +56,6 @@ const PlayerBoard = ({name}) => {
         setDrop(false);
         dispatch(dropAvailable({drop: false, availableGreenBox}));
       }
-    } else if (board.id === 'Computerboard') {
-      return;
     } else {
       //Rotate Horizontal Ship
 
@@ -70,7 +69,7 @@ const PlayerBoard = ({name}) => {
 
         for (let i = 0; i < shipSize; i++) {
           const targetBox = parentRow.children[Number(currentBox.id) + i];
-          targetBox.classList.add('bg-green-600');
+          targetBox.classList.add('bg-green-500');
           const name = targetBox.parentElement.id.toLowerCase();
           const number = targetBox.id;
           availableGreenBox.push({name, number});
@@ -86,13 +85,13 @@ const PlayerBoard = ({name}) => {
   const dragLeave = () => {
     setDrop(false);
     const boxes = document.querySelectorAll('.box');
-    boxes.forEach((box) => box.classList.remove('bg-green-600'));
+    boxes.forEach((box) => box.classList.remove('bg-green-500'));
   };
 
   return (
     <div className='relative flex  flex-col gap-1 text-white mt-2'>
       <div
-        className={`bg-green-200 text-brand font-bold text-center rounded w-2/3 mx-auto`}
+        className={`bg-green-500 text-brand font-bold text-center rounded w-2/3 mx-auto`}
       >
         Player Board
       </div>
@@ -105,7 +104,11 @@ const PlayerBoard = ({name}) => {
         ))}
       </div>
       {/* row's name and boxes */}
-      <div id='Playerboard' className='relative  flex flex-col gap-1 z-10'>
+      <div
+        id='Playerboard'
+        ref={PlayerRef}
+        className='relative  flex flex-col gap-1 z-10'
+      >
         {rows.map((row, index) => (
           <div id={row.name} key={index} className='flex gap-1'>
             <span className='w-4'>{row.name}</span>
@@ -118,7 +121,7 @@ const PlayerBoard = ({name}) => {
                   onDragEnter={dragEnter}
                   onDragLeaveCapture={dragLeave}
                   className={`box w-8 h-8 border 
-                     bg-blue-200 hover:opacity-80`}
+                      hover:opacity-80`}
                 ></div>
               );
             })}
