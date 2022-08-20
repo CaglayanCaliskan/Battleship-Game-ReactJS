@@ -9,25 +9,24 @@ import {setGameStart} from '../features/gameOptionsSlice';
 
 const FleetSetup = () => {
   const {playerFleet} = useSelector((state) => state.fleetsSlice);
-  const {game} = useSelector((state) => state.gameOptionsSlice);
+  const {game, rotate} = useSelector((state) => state.gameOptionsSlice);
   const dispatch = useDispatch();
   const myRef = useRef(null);
 
   return !game ? (
-    <div className='flex flex-col items-center gap-2 mt-4'>
-      <h1 className='text-white text-center text-xl select-none'>
+    <div className='flex flex-col items-center md:gap-4 md:mt-4 text-xs md:text-xl'>
+      <h1 className='text-white text-center select-none'>
         Locate Your Ships...
       </h1>
-      <div className=' bg-red-500 rounded-full text-white p-1 cursor-pointer active:rotate-90 hover:bg-white hover:text-red-500 transition-all'>
-        <MdOutlineCropRotate
-          onClick={() => dispatch(setRotate())}
-          size={30}
-          className=' rounded flex items-center justify-center'
-        />
+      <div className='md:scale-150 bg-red-500 rounded-full text-white p-1 cursor-pointer active:rotate-90 hover:bg-white hover:text-red-500 transition-all'>
+        <MdOutlineCropRotate onClick={() => dispatch(setRotate())} />
       </div>
       {/* ship models */}
       {
-        <div ref={myRef} className='flex gap-4'>
+        <div
+          ref={myRef}
+          className={`flex ${rotate ? 'flex-col gap-0.5' : ''}  gap-2 md:gap-4`}
+        >
           {playerFleet.map((ship) => (
             <ShipModel2 key={ship.id} ship={ship} />
           ))}
@@ -38,7 +37,7 @@ const FleetSetup = () => {
       {playerFleet.every((ship) => ship.onBoard === true) && (
         <div
           onClick={() => dispatch(setGameStart())}
-          className=' mt-4 bg-green-900 p-6  rounded-lg text-white cursor-pointer active:scale-95 hover:bg-white hover:text-red-500 transition-all'
+          className=' mt-4 absolute right-14 md:left-0 md:relative bg-green-900 p-2 md:p-6  rounded-lg text-white cursor-pointer active:scale-95 hover:bg-white hover:text-red-500 transition-all'
         >
           Start
         </div>
@@ -46,7 +45,7 @@ const FleetSetup = () => {
       {playerFleet.find((ship) => ship.onBoard === true) && (
         <div
           onClick={() => dispatch(resetFleet())}
-          className=' mt-4 bg-red-900 p-3 rounded-lg text-white cursor-pointer active:scale-95 hover:bg-white hover:text-red-500 transition-all'
+          className=' mt-4 absolute left-14 md:left-0 md:relative bg-red-900 p-2 md:p-3 rounded-lg text-white cursor-pointer active:scale-95 hover:bg-white hover:text-red-500 transition-all'
         >
           Reset
         </div>

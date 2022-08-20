@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {dropAvailable} from '../features/fleetsSlice';
 
-const PlayerBoard = ({PlayerRef}) => {
+const PlayerBoard = ({PlayerRef, gameOver, turn}) => {
   const [drop, setDrop] = useState(false);
 
   const {playerFleet} = useSelector((state) => state.fleetsSlice);
@@ -89,16 +89,19 @@ const PlayerBoard = ({PlayerRef}) => {
   };
 
   return (
-    <div className='relative flex  flex-col gap-1 text-white mt-2'>
+    <div className='relative flex  flex-col  gap-0 md:gap-1 text-white md:mt-2 text-sm md:text-base'>
       <div
-        className={`bg-green-500 text-brand font-bold text-center rounded w-2/3 mx-auto`}
+        className={`bg-green-500 absolute md:relative -left-24 md:left-0 md:top-0 top-28 -rotate-90 md:rotate-0  text-brand font-bold text-center rounded w-36 md:w-2/3 p-1 md:p-0 mx-auto`}
       >
         Player Board
       </div>
-      <div className=' flex justify-end '>
+      <div
+        className=' flex  md:justify-end justify-center gap-3 ml-5 md:ml-0
+       md:gap-0'
+      >
         {/* column numbers */}
         {column.map((col) => (
-          <div key={col} className='w-6 h-6 mr-3 text-end'>
+          <div key={col} className=' md:w-6 md:h-6 md:mr-3 md:text-end'>
             {col}
           </div>
         ))}
@@ -107,10 +110,14 @@ const PlayerBoard = ({PlayerRef}) => {
       <div
         id='Playerboard'
         ref={PlayerRef}
-        className='relative  flex flex-col gap-1 z-10'
+        className={`relative flex flex-col md:gap-1 z-10   ${
+          !turn && !gameOver
+            ? ' outline outline-red-400 outline-offset-1 rounded-sm '
+            : ''
+        }`}
       >
         {rows.map((row, index) => (
-          <div id={row.name} key={index} className='flex gap-1'>
+          <div id={row.name} key={index} className='flex gap-1 justify-center'>
             <span className='w-4'>{row.name}</span>
             {row.row.map((row, index) => {
               return (
@@ -120,7 +127,7 @@ const PlayerBoard = ({PlayerRef}) => {
                   data='undefined'
                   onDragEnter={dragEnter}
                   onDragLeaveCapture={dragLeave}
-                  className={`box w-8 h-8 border 
+                  className={`box w-4 h-4 border md:w-8 md:h-8 
                       hover:opacity-80`}
                 ></div>
               );

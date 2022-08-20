@@ -2,7 +2,7 @@ import {useRef} from 'react';
 import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 
-const ComputerBoard = ({attack, CompRef}) => {
+const ComputerBoard = ({attack, CompRef, turn}) => {
   const {game} = useSelector((state) => state.gameOptionsSlice);
   const {playerFleet} = useSelector((state) => state.fleetsSlice);
   useEffect(() => {
@@ -43,7 +43,6 @@ const ComputerBoard = ({attack, CompRef}) => {
     for (const box of CompRef.current.children) {
       box.value = undefined;
       box.classList.remove('bg-fire-bg');
-      box.classList.remove('bg-blue-300');
       box.classList.remove('bg-gray-400');
     }
   };
@@ -57,7 +56,6 @@ const ComputerBoard = ({attack, CompRef}) => {
       let randomBoxID = checkBoxOk(randomNumber, ship.size);
       const targetBox = CompRef.current.children;
       for (let i = 0; i < ship.size; i++) {
-        targetBox[randomBoxID + i - 1].classList.add('bg-blue-300');
         targetBox[randomBoxID + i - 1].value = ship.name;
       }
     } else {
@@ -66,48 +64,56 @@ const ComputerBoard = ({attack, CompRef}) => {
       let randomBoxID = checkBoxOk(randomNumber, ship.size);
       const targetBox = CompRef.current.children;
       for (let i = 0; i < ship.size; i++) {
-        targetBox[randomBoxID + i * 10].classList.add('bg-blue-300');
         targetBox[randomBoxID + i * 10].value = ship.name;
       }
     }
   }
 
   return (
-    <div className='relative flex  flex-col gap-1 text-white mt-2'>
-      <div
-        className={`bg-red-200 text-brand font-bold text-center rounded w-2/3 mx-auto`}
-      >
-        Computer Board
-      </div>
-      <div className=' flex justify-end '>
-        {/* column numbers */}
-        {column.map((col) => (
-          <div key={col} className='w-6 h-6 mr-3 text-end'>
-            {col}
-          </div>
-        ))}
-      </div>
-
-      <div id='Computerboard' className='relative '>
-        <div className='absolute flex flex-col gap-3  -left-10'>
-          {alp.map((col) => (
-            <div key={col} className='w-6 h-6 mr-3 text-end'>
+    <div className=''>
+      <div className='relative flex ml-4  flex-col gap-0 md:gap-1 text-white md:mt-2 text-sm md:text-base '>
+        <div
+          className={`bg-red-200 absolute md:relative -left-28 md:left-0 md:top-0 top-28 -rotate-90 md:rotate-0 text-brand font-bold text-center rounded w-36 md:w-2/3 p-1 md:p-0 mx-auto `}
+        >
+          Computer Board
+        </div>
+        <div className=' flex justify-center gap-3.5 md:gap-7  '>
+          {/* column numbers */}
+          {column.map((col) => (
+            <div key={col} className=''>
               {col}
             </div>
           ))}
         </div>
-        <div className='grid grid-cols-10 gap-1' ref={CompRef}>
-          {rows.map((i) => {
-            return (
-              <div
-                onClick={(e) => attack(e)}
-                key={i}
-                id={i + 1}
-                value={undefined}
-                className={`cbox w-8 h-8 borde  border cursor-pointer  `}
-              ></div>
-            );
-          })}
+
+        <div id='Computerboard' className='relative '>
+          <div className='absolute -left-4  flex flex-col  md:gap-3 md:-left-6   '>
+            {alp.map((col) => (
+              <div key={col} className='text-end '>
+                {col}
+              </div>
+            ))}
+          </div>
+          <div
+            className={` grid place-items-center w-52 mx-auto items-center md:ml-0 md:w-full grid-cols-10 gap-1 ${
+              turn && game
+                ? 'outline outline-green-400 outline-offset-1 rounded-sm '
+                : ''
+            } `}
+            ref={CompRef}
+          >
+            {rows.map((i) => {
+              return (
+                <div
+                  onClick={(e) => attack(e)}
+                  key={i}
+                  id={i + 1}
+                  value={undefined}
+                  className={`cbox w-4 h-4 md:w-8 md:h-8 borde  border cursor-pointer  `}
+                ></div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>

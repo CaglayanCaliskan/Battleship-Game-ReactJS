@@ -24,7 +24,10 @@ const ShipModel = ({ship}) => {
       >
         <div className={`flex gap-1 ${!rotate ? 'flex-col' : ''}`}>
           {shipSize.map((box) => (
-            <div key={box} className='w-8 h-8 border  border-yellow-300'></div>
+            <div
+              key={box}
+              className='w-4 h-4 md:w-8 md:h-8 border  border-yellow-300'
+            ></div>
           ))}
         </div>
       </div>

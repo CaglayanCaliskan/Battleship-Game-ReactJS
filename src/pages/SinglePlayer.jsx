@@ -9,11 +9,10 @@ import {useRef} from 'react';
 
 const SinglePlayer = () => {
   const {game} = useSelector((state) => state.gameOptionsSlice);
-  const [gameOver, SetGameOver] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   const [attackCount, setAttackCount] = useState(0);
   const [turn, setTurn] = useState(true);
   const [hit, setHit] = useState({ship: '', hit: false, message: ''});
-  const [inGameShip, SetInGameShip] = useState(['yessssir']);
   const CompRef = useRef(null);
   const PlayerRef = useRef(null);
 
@@ -23,9 +22,6 @@ const SinglePlayer = () => {
 
   useEffect(() => {
     !turn && computerAttack();
-    if (inGameShip.length === 0) {
-      SetGameOver(true);
-    }
   }, [turn]);
 
   const CheckComputerBoard = () => {
@@ -34,9 +30,14 @@ const SinglePlayer = () => {
       if (box.value != undefined) {
         arr.push(box.value);
       }
-      SetInGameShip(arr);
     }
-    //
+
+    if (arr.length === 0) {
+      CompRef.current.classList.add('bg-fire-bg');
+      CompRef.current.classList.add('bg-center');
+      CompRef.current.classList.add('bg-cover');
+      setGameOver(true);
+    }
   };
   const CheckPlayerBoard = () => {
     // console.log(PlayerRef.current);
@@ -51,10 +52,12 @@ const SinglePlayer = () => {
           ship: e.target.value,
           hit: true,
         });
-        e.target.classList = 'bg-fire-bg bg-cover border';
+
+        e.target.classList.add('bg-fire-bg');
+        e.target.classList.add('bg-cover');
+        e.target.classList.add('border');
         e.target.value = undefined;
         setTurn(true);
-        CheckComputerBoard();
       } else {
         e.target.classList.add('bg-gray-400');
         setHit({
@@ -67,6 +70,7 @@ const SinglePlayer = () => {
     } else {
       return;
     }
+    CheckComputerBoard();
   };
   function computerAttack() {
     if (!turn && game) {
@@ -82,7 +86,6 @@ const SinglePlayer = () => {
             ship: randomBox.getAttribute('data'),
             hit: true,
           });
-          CheckPlayerBoard();
         } else {
           randomBox.classList.add('bg-gray-400');
           setHit({
@@ -93,24 +96,24 @@ const SinglePlayer = () => {
         }
 
         setTurn(true);
-      }, 1000);
+      }, 700);
     }
   }
 
   return (
     <main className='bg-brand h-screen select-none flex flex-col'>
-      <div className='flex justify-around'>
-        <PlayerBoard PlayerRef={PlayerRef} />
-        <ComputerBoard CompRef={CompRef} attack={attack} />
+      <div className='grid place-items-center md:flex md:justify-around'>
+        <PlayerBoard PlayerRef={PlayerRef} turn={turn} />
+        <ComputerBoard CompRef={CompRef} attack={attack} turn={turn} />
       </div>
       {!game ? (
         <FleetSetup />
       ) : (
         <ScoreBoard
-          gameOver={gameOver}
           attackCount={attackCount}
           turn={turn}
           hit={hit}
+          gameOver={gameOver}
         />
       )}
     </main>
