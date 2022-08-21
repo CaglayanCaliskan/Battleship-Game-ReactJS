@@ -77,7 +77,7 @@ const ComputerBoard = ({attack, CompRef, turn}) => {
         >
           Computer Board
         </div>
-        <div className=' flex justify-center gap-3.5 md:gap-7  '>
+        <div className=' flex justify-center gap-3.5 md:gap-7'>
           {/* column numbers */}
           {column.map((col) => (
             <div key={col} className=''>

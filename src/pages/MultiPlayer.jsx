@@ -9,16 +9,11 @@ const MultiPlayer = () => {
 
         <Link
           to='/'
-          className='bg-main text-white rounded-md p-2 hover:scale-95 border border-main hover:border-white transition-all'
+          className='bg-main mt-2 text-white rounded-md p-2 hover:scale-95 border border-main hover:border-white transition-all'
         >
           Back
         </Link>
       </div>
-      <div
-        draggable
-        onTouchMove={() => console.log(123)}
-        className='w-10 h-10 bg-red-300 absolute left-1/2'
-      ></div>
     </main>
   );
 };
