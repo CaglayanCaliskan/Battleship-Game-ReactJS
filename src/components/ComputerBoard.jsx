@@ -97,7 +97,7 @@ const ComputerBoard = ({attack, CompRef, turn}) => {
           <div
             className={` grid place-items-center w-52 mx-auto items-center md:ml-0 md:w-full grid-cols-10 gap-1 ${
               turn && game
-                ? 'outline outline-green-400 outline-offset-1 rounded-sm '
+                ? 'outline-dotted outline-green-400 outline-offset-1 rounded-sm '
                 : ''
             } `}
             ref={CompRef}

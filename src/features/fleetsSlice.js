@@ -67,7 +67,7 @@ export const fleetsSlice = createSlice({
     },
     dropShip: (state, action) => {
       const boxes = document.querySelectorAll('.box');
-      state.targetBoxes.map((target, index) => {
+      state.targetBoxes.map((target) => {
         boxes.forEach((box) => {
           if (box.parentElement.parentElement.id === 'Playerboard') {
             if (
@@ -85,10 +85,14 @@ export const fleetsSlice = createSlice({
       });
     },
     resetFleet: (state) => {
-      state.playerFleet.map((ship) => (ship.onBoard = false));
+      state.playerFleet.map((ship) => {
+        ship.onBoard = false;
+        ship.selected = false;
+      });
       const boxes = document.querySelectorAll('.box');
       boxes.forEach((box) => {
         box.classList.remove('bg-green-600');
+        box.classList.remove('bg-green-500');
         box.setAttribute('data', undefined);
       });
     },

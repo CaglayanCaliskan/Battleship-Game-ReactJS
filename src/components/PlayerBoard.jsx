@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {dropAvailable} from '../features/fleetsSlice';
+import {dropShip} from '../features/fleetsSlice';
 
 const PlayerBoard = ({PlayerRef, gameOver, turn}) => {
   const [drop, setDrop] = useState(false);
 
   const {playerFleet} = useSelector((state) => state.fleetsSlice);
+  const ship = playerFleet.find((ship) => ship.selected === true);
   const {rotate} = useSelector((state) => state.gameOptionsSlice);
   const selectedShip = playerFleet.filter((ship) => ship.selected);
   const dispatch = useDispatch();
@@ -112,7 +114,7 @@ const PlayerBoard = ({PlayerRef, gameOver, turn}) => {
         ref={PlayerRef}
         className={`relative flex flex-col md:gap-1 z-10   ${
           !turn && !gameOver
-            ? ' outline outline-red-400 outline-offset-1 rounded-sm '
+            ? ' outline-dotted outline-red-400 outline-offset-1 rounded-sm '
             : ''
         }`}
       >
@@ -127,6 +129,10 @@ const PlayerBoard = ({PlayerRef, gameOver, turn}) => {
                   data='undefined'
                   onDragEnter={dragEnter}
                   onDragLeaveCapture={dragLeave}
+                  onTouchStart={(e) => {
+                    dragEnter(e);
+                    dispatch(dropShip(ship));
+                  }}
                   className={`box w-4 h-4 border md:w-8 md:h-8 
                       hover:opacity-80`}
                 ></div>

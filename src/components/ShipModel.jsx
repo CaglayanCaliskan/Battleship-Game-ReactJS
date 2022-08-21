@@ -15,18 +15,24 @@ const ShipModel = ({ship}) => {
     !ship.onBoard && (
       <div
         draggable
+        onClick={() => dispatch(dragShip(ship))}
         onDragStart={() => {
           dispatch(dragShip(ship));
         }}
         onDragEnd={() => dispatch(dropShip(ship))}
+        onTouchStart={() => dispatch(dragShip(ship))}
         key={ship.id}
         className={`text-white w-fit h-fit `}
       >
-        <div className={`flex gap-1 ${!rotate ? 'flex-col' : ''}`}>
+        <div
+          className={`flex gap-1 ${!rotate ? 'flex-col' : ''} ${
+            ship.selected ? 'outline outline-green-500 p-1' : ''
+          }`}
+        >
           {shipSize.map((box) => (
             <div
               key={box}
-              className='w-4 h-4 md:w-8 md:h-8 border  border-yellow-300'
+              className={`w-4 h-4 md:w-8 md:h-8 border  border-yellow-300`}
             ></div>
           ))}
         </div>
